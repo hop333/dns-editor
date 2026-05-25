@@ -1,0 +1,7 @@
+# Zones are appended here by the backend when they are created in the UI.
+# The demo zone keeps BIND bootable in a fresh checkout.
+zone "mydomain.ru" {
+    type master;
+    file "/etc/bind/zones/db.mydomain.ru";
+    allow-update { none; };
+};

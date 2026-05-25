@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #111827;
+  --card: #ffffff;
+  --border: #cbd5e1;
+  --border-strong: #94a3b8;
+  --primary: #1f2937;
+  --primary-hover: #020617;
+  --muted: #475569;
+  --muted-soft: #f1f5f9;
+  --success: #15803d;
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+  --danger-text: #991b1b;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --status-ok: #16a34a;
+  --status-bad: #dc2626;
+  --type-a: #1d4ed8;
+  --type-aaaa: #7c3aed;
+  --type-cname: #0891b2;
+  --type-mx: #be123c;
+  --type-ns: #047857;
+  --type-txt: #92400e;
+  --type-srv: #4338ca;
+}
+
+html[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #111827;
+  --card: #ffffff;
+  --border: #cbd5e1;
+  --border-strong: #94a3b8;
+  --primary: #1f2937;
+  --primary-hover: #020617;
+  --muted: #475569;
+  --muted-soft: #f1f5f9;
+}
+
+html[data-theme="dark"] {
+  --background: #101010;
+  --foreground: #f4f4f5;
+  --card: #18181b;
+  --border: #3f3f46;
+  --border-strong: #71717a;
+  --primary: #3f3f46;
+  --primary-hover: #52525b;
+  --muted: #d4d4d8;
+  --muted-soft: #27272a;
+  --success: #16a34a;
+  --success-bg: #052e1a;
+  --success-text: #bbf7d0;
+  --danger: #dc2626;
+  --danger-bg: #450a0a;
+  --danger-text: #fecaca;
+  --warning-bg: #422006;
+  --warning-text: #fde68a;
+  --status-ok: #22c55e;
+  --status-bad: #f87171;
+  --type-a: #93c5fd;
+  --type-aaaa: #c4b5fd;
+  --type-cname: #67e8f9;
+  --type-mx: #fda4af;
+  --type-ns: #86efac;
+  --type-txt: #fde68a;
+  --type-srv: #a5b4fc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+body {
+  background:
+    radial-gradient(900px 450px at 0% -5%, color-mix(in srgb, #ffffff 65%, transparent), transparent 60%),
+    radial-gradient(700px 350px at 100% 0%, color-mix(in srgb, #d1d5db 16%, transparent), transparent 60%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(900px 450px at 0% -5%, color-mix(in srgb, #ffffff 5%, transparent), transparent 60%),
+    radial-gradient(700px 350px at 100% 0%, color-mix(in srgb, #71717a 8%, transparent), transparent 60%),
+    var(--background);
+}
+
+.badge-a,
+.badge-aaaa,
+.badge-cname,
+.badge-mx,
+.badge-ns,
+.badge-txt,
+.badge-srv {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+}
+
+.badge-a { color: var(--type-a); }
+.badge-aaaa { color: var(--type-aaaa); }
+.badge-cname { color: var(--type-cname); }
+.badge-mx { color: var(--type-mx); }
+.badge-ns { color: var(--type-ns); }
+.badge-txt { color: var(--type-txt); }
+.badge-srv { color: var(--type-srv); }

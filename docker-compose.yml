@@ -1,0 +1,58 @@
+# Три сервиса: BIND (DNS), FastAPI (управление зонами), Next.js (UI).
+# Тома ./config и ./zones монтируются и в BIND, и в backend — одинаковые файлы на хосте.
+# Переменные портов и паролей — из .env (см. .env.example).
+
+services:
+  bind9:
+    image: ubuntu/bind9:latest
+    container_name: dns-server
+    restart: unless-stopped
+    # Образ ubuntu/bind9 имеет свой entrypoint — задаём явно, без дублирования -g/-u
+    entrypoint: ["/usr/sbin/named"]
+    command: ["-g", "-c", "/etc/bind/named.conf", "-u", "bind"]
+    ports:
+      - "${DNS_PORT:-53}:53/udp"
+      - "${DNS_PORT:-53}:53/tcp"
+    volumes:
+      - ./config:/etc/bind
+      - ./zones:/etc/bind/zones
+    # Пока rndc status не проходит — unhealthy; backend поднимается только после healthy.
+    healthcheck:
+      test: ["CMD", "rndc", "-k", "/etc/bind/rndc.key", "status"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  backend:
+    build: ./backend
+    container_name: dns-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ./config:/etc/bind
+      - ./zones:/etc/bind/zones
+    environment:
+      - BIND_HOST=dns-server
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - SECRET_KEY=${SECRET_KEY:-change-me-to-a-random-secret-in-production}
+      - JWT_EXPIRE_HOURS=${JWT_EXPIRE_HOURS:-24}
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+    depends_on:
+      bind9:
+        condition: service_healthy
+
+  # URL API вшивается при npm run build — для доступа с другого хоста задайте NEXT_PUBLIC_API_URL и пересоберите.
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    container_name: dns-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend

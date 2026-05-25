@@ -1,0 +1,76 @@
+name: dns-editor
+
+services:
+  bind9:
+    image: ubuntu/bind9:latest
+    container_name: dns-editor-bind
+    restart: unless-stopped
+    entrypoint: ["/usr/sbin/named"]
+    command: ["-g", "-c", "/etc/bind/named.conf", "-u", "bind"]
+    ports:
+      - "${DNS_PORT:-53}:53/udp"
+      - "${DNS_PORT:-53}:53/tcp"
+    volumes:
+      - ../config:/etc/bind
+      - ../zones:/etc/bind/zones
+    healthcheck:
+      test: ["CMD", "rndc", "-k", "/etc/bind/rndc.key", "status"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  backend:
+    build: ../backend
+    container_name: dns-editor-api
+    restart: unless-stopped
+    expose:
+      - "8000"
+    volumes:
+      - ../config:/etc/bind
+      - ../zones:/etc/bind/zones
+    environment:
+      - BIND_HOST=dns-editor-bind
+      - ADMIN_USER=${ADMIN_USER:?ADMIN_USER is required}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?ADMIN_PASSWORD is required}
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - JWT_EXPIRE_HOURS=${JWT_EXPIRE_HOURS:-24}
+      - CORS_ORIGINS=${CORS_ORIGINS:?CORS_ORIGINS is required}
+    depends_on:
+      bind9:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ../frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+    container_name: dns-editor-ui
+    restart: unless-stopped
+    expose:
+      - "3000"
+    depends_on:
+      - backend
+
+  caddy:
+    image: caddy:2.8-alpine
+    container_name: dns-editor-caddy
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    environment:
+      - PANEL_DOMAIN=${PANEL_DOMAIN:?PANEL_DOMAIN is required}
+      - ACME_EMAIL=${ACME_EMAIL:-}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ../site:/srv/site:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  caddy_data:
+  caddy_config:
