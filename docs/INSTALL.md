@@ -47,12 +47,12 @@ dns.example.com  -> панель DNS Editor
 
 ## Установка одной командой
 
-Замените `OWNER/dns-editor` на реальный GitHub-репозиторий:
+Используйте публичный GitHub-репозиторий:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/OWNER/dns-editor/main/deploy/install.sh \
+curl -fsSL https://raw.githubusercontent.com/hop333/dns-editor/main/deploy/install.sh \
   | sudo bash -s -- \
-      --repo https://github.com/OWNER/dns-editor.git \
+      --repo https://github.com/hop333/dns-editor.git \
       --domain dns.example.com \
       --site-domain example.com \
       --email admin@example.com
@@ -70,7 +70,7 @@ sudo grep ADMIN_PASSWORD /opt/dns-editor/.env
 
 ```bash
 sudo bash deploy/install.sh \
-  --repo https://github.com/OWNER/dns-editor.git \
+  --repo https://github.com/hop333/dns-editor.git \
   --domain 203.0.113.10 \
   --http-only
 ```

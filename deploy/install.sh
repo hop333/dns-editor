@@ -2,8 +2,8 @@
 # Self-hosted installer for DNS Editor.
 #
 # Example:
-#   curl -fsSL https://raw.githubusercontent.com/OWNER/dns-editor/main/deploy/install.sh \
-#     | sudo bash -s -- --repo https://github.com/OWNER/dns-editor.git --domain dns.example.com --email admin@example.com
+#   curl -fsSL https://raw.githubusercontent.com/hop333/dns-editor/main/deploy/install.sh \
+#     | sudo bash -s -- --repo https://github.com/hop333/dns-editor.git --domain dns.example.com --email admin@example.com
 
 set -euo pipefail
 
@@ -37,8 +37,8 @@ Optional:
   --skip-docker-install   Do not install Docker automatically
 
 Examples:
-  sudo bash deploy/install.sh --repo https://github.com/OWNER/dns-editor.git --domain dns.example.com --site-domain example.com --email admin@example.com
-  sudo bash deploy/install.sh --repo https://github.com/OWNER/dns-editor.git --domain 203.0.113.10 --http-only
+  sudo bash deploy/install.sh --repo https://github.com/hop333/dns-editor.git --domain dns.example.com --site-domain example.com --email admin@example.com
+  sudo bash deploy/install.sh --repo https://github.com/hop333/dns-editor.git --domain 203.0.113.10 --http-only
 EOF
 }
 

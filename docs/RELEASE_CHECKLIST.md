@@ -72,10 +72,9 @@ bash -n deploy/backup.sh
 
 ## 4. Плейсхолдеры GitHub и доменов
 
-Перед публичным релизом замените проектные плейсхолдеры:
+Перед публичным релизом замените доменные и почтовые плейсхолдеры:
 
 ```text
-OWNER/dns-editor
 admin@example.com
 dns.example.com
 example.com
@@ -93,6 +92,6 @@ git add .
 git status --short
 git commit -m "Initial open-source release"
 git branch -M main
-git remote add origin https://github.com/OWNER/dns-editor.git
+git remote add origin https://github.com/hop333/dns-editor.git
 git push -u origin main
 ```
