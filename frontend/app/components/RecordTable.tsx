@@ -75,7 +75,7 @@ export default function RecordTable({
 
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-            <div className="flex flex-col gap-3 border-b border-[var(--border)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 border-b border-[var(--border)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
         <div className="min-w-0">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">DNS&#x2011;записи</h2>
           <p className="mt-0.5 text-sm text-[var(--muted)]">
@@ -94,8 +94,8 @@ export default function RecordTable({
         </button>
       </div>
 
-            {records.length > 0 && (
-        <div className="flex flex-col gap-3 border-b border-[var(--border)] px-5 py-3 sm:flex-row sm:items-center">
+      {records.length > 0 && (
+        <div className="flex flex-col gap-3 border-b border-[var(--border)] px-4 py-3 sm:flex-row sm:items-center sm:px-5">
           <div className="relative flex-1">
             <svg
               className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]"
@@ -124,11 +124,11 @@ export default function RecordTable({
               </button>
             )}
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
             <button
               type="button"
               onClick={() => setTypeFilter("ALL")}
-              className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${
+              className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium transition ${
                 typeFilter === "ALL"
                   ? "bg-[var(--primary)] text-white shadow-sm"
                   : "bg-[var(--background)] text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -144,7 +144,7 @@ export default function RecordTable({
                   key={t}
                   type="button"
                   onClick={() => setTypeFilter(typeFilter === t ? "ALL" : t)}
-                  className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${
+                  className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium transition ${
                     typeFilter === t
                       ? "bg-[var(--primary)] text-white shadow-sm"
                       : "bg-[var(--background)] text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -161,7 +161,7 @@ export default function RecordTable({
 
             {showAddForm && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center sm:p-4"
           onPointerDown={(e) => {
             addOverlayPointerDown.current = e.target === e.currentTarget;
           }}
@@ -173,7 +173,7 @@ export default function RecordTable({
           }}
         >
           <div
-            className="w-full max-w-2xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-xl"
+            className="max-h-[calc(100vh-2rem)] w-full max-w-2xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-xl"
           >
             <div className="flex items-center justify-between border-b border-[var(--border)] px-5 py-4">
               <div>
@@ -191,7 +191,7 @@ export default function RecordTable({
                 </svg>
               </button>
             </div>
-            <div className="max-h-[70vh] overflow-auto">
+            <div className="max-h-[calc(100vh-7rem)] overflow-auto">
               <RecordEditForm
                 record={newRecord}
                 domainName={domainName}
@@ -207,7 +207,7 @@ export default function RecordTable({
         </div>
       )}
 
-            <div className="overflow-x-auto">
+      <div>
         {records.length === 0 && !showAddForm ? (
           <div className="px-5 py-12 text-center text-[var(--muted)]">
             <p className="mb-2">Записей пока нет</p>
@@ -234,19 +234,20 @@ export default function RecordTable({
           <div className="divide-y divide-[var(--border)]">
             {filtered.map((record) => (
               <div key={record.id}>
-                <div className="flex flex-wrap items-center gap-4 px-5 py-3 transition hover:bg-[var(--muted-soft)]/60 sm:flex-nowrap">
-                  <div className="w-16 shrink-0">
+                <div className="grid gap-2 px-4 py-4 transition hover:bg-[var(--muted-soft)]/60 sm:flex sm:items-center sm:gap-4 sm:px-5 sm:py-3">
+                  <div className="flex items-center justify-between gap-3 sm:w-16 sm:shrink-0 sm:justify-start">
                     <RecordTypeBadge type={record.type} />
+                    <span className="text-xs text-[var(--muted)] sm:hidden">TTL {record.ttl}</span>
                   </div>
-                  <div className="min-w-0 flex-1 font-mono text-sm text-[var(--foreground)]">
+                  <div className="min-w-0 break-all font-mono text-sm text-[var(--foreground)] sm:flex-1 sm:break-normal">
                     {record.name === "@" ? zone?.name : `${record.name}.${zone?.name}`}
                   </div>
-                  <div className="min-w-0 flex-1 truncate font-mono text-sm text-[var(--muted)]">
+                  <div className="min-w-0 break-all font-mono text-sm text-[var(--muted)] sm:flex-1 sm:truncate">
                     {record.type === "MX" && record.priority != null && `${record.priority} `}
                     {record.value}
                   </div>
-                  <div className="w-14 shrink-0 text-right text-sm text-[var(--muted)]">{record.ttl}</div>
-                  <div className="flex shrink-0 gap-1">
+                  <div className="hidden w-14 shrink-0 text-right text-sm text-[var(--muted)] sm:block">{record.ttl}</div>
+                  <div className="flex shrink-0 justify-end gap-1 sm:justify-start">
                     <button
                       type="button"
                       onClick={() => onStartEdit(record.id)}
@@ -295,7 +296,7 @@ export default function RecordTable({
 
             {recordToDelete && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center sm:p-4"
           onPointerDown={(e) => {
             deleteOverlayPointerDown.current = e.target === e.currentTarget;
           }}
@@ -307,7 +308,7 @@ export default function RecordTable({
           }}
         >
           <div
-            className="w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xl"
+            className="max-h-[calc(100vh-2rem)] w-full max-w-sm overflow-auto rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xl"
           >
             <p className="font-medium text-[var(--foreground)]">Удалить запись?</p>
             <p className="mt-1 text-sm text-[var(--muted)]">
@@ -315,18 +316,18 @@ export default function RecordTable({
               {recordToDelete.name === "@" ? zone?.name : `${recordToDelete.name}.${zone?.name}`} →{" "}
               {recordToDelete.value}
             </p>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 onClick={onCancelDelete}
-                className="rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)]"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)] sm:w-auto"
               >
                 Отмена
               </button>
               <button
                 type="button"
                 onClick={() => onConfirmDelete(recordToDelete.id)}
-                className="rounded-lg bg-[var(--danger)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                className="w-full rounded-lg bg-[var(--danger)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
               >
                 Удалить
               </button>

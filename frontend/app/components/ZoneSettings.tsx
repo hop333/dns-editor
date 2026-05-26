@@ -18,7 +18,7 @@ export default function ZoneSettings({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between px-5 py-4 text-left"
+        className="flex w-full items-center justify-between px-4 py-4 text-left sm:px-5"
       >
         <span className="font-medium text-[var(--foreground)]">Настройки зоны</span>
         <svg
@@ -31,7 +31,7 @@ export default function ZoneSettings({
         </svg>
       </button>
       {open && (
-        <div className="border-t border-[var(--border)] px-5 pb-5 pt-2">
+        <div className="border-t border-[var(--border)] px-4 pb-5 pt-2 sm:px-5">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <label className="block text-sm">
               <span className="text-[var(--muted)]">TTL по умолчанию (сек)</span>

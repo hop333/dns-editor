@@ -22,7 +22,7 @@ export default function CreateZoneModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center sm:p-4"
       onPointerDown={(e) => {
         overlayPointerDown.current = e.target === e.currentTarget;
       }}
@@ -33,7 +33,7 @@ export default function CreateZoneModal({
         overlayPointerDown.current = false;
       }}
     >
-      <div className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-lg">
+      <div className="max-h-[calc(100vh-1.5rem)] w-full max-w-md overflow-auto rounded-xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-lg sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-[var(--foreground)]">Новая зона</h2>
           <button
@@ -64,18 +64,18 @@ export default function CreateZoneModal({
             <p className="text-xs text-[var(--danger-text)]">Введите корректное доменное имя, например example.com</p>
           )}
 
-          <div className="flex justify-end gap-2">
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="rounded border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)]"
+              className="w-full rounded border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] sm:w-auto"
             >
               Отмена
             </button>
             <button
               type="submit"
               disabled={!valid}
-              className="rounded bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--primary-hover)] disabled:opacity-50"
+              className="w-full rounded bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--primary-hover)] disabled:opacity-50 sm:w-auto"
             >
               Создать
             </button>

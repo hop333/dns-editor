@@ -508,7 +508,7 @@ export default function Home() {
         onLogout={handleUnauthorized}
       />
 
-      <main className="mx-auto max-w-6xl px-4 py-7 sm:px-6">
+      <main className="mx-auto max-w-6xl px-3 py-5 sm:px-6 sm:py-7">
         {loadingZone && (
           <div className="mb-4 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--muted)] shadow-sm">
             Загрузка записей…
@@ -590,7 +590,7 @@ export default function Home() {
           onConfirmDelete={deleteRecord}
         />
 
-        <p className="mt-5 text-center text-xs text-[var(--muted)]">
+        <p className="mt-5 px-2 text-center text-xs text-[var(--muted)]">
           Изменения применяются после нажатия «Сохранить». После сохранения нажмите «Перезагрузить BIND», если rndc настроен.
         </p>
       </main>
@@ -601,7 +601,7 @@ export default function Home() {
 
             {zoneToDelete && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 sm:items-center sm:p-4"
           onPointerDown={(e) => {
             deleteZoneOverlayPointerDown.current = e.target === e.currentTarget;
           }}
@@ -612,24 +612,24 @@ export default function Home() {
             deleteZoneOverlayPointerDown.current = false;
           }}
         >
-          <div className="w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xl">
+          <div className="max-h-[calc(100vh-1.5rem)] w-full max-w-sm overflow-auto rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xl">
             <p className="font-medium text-[var(--foreground)]">Удалить зону?</p>
             <p className="mt-1 text-sm text-[var(--muted)]">
               Зона <strong>{zoneToDelete}</strong> и файл <code>db.{zoneToDelete}</code> будут удалены.
               Бэкап сохранится в <code>.bak</code>.
             </p>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 onClick={() => setZoneToDelete(null)}
-                className="rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)]"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)] sm:w-auto"
               >
                 Отмена
               </button>
               <button
                 type="button"
                 onClick={handleDeleteZone}
-                className="rounded-lg bg-[var(--danger)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                className="w-full rounded-lg bg-[var(--danger)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto"
               >
                 Удалить
               </button>

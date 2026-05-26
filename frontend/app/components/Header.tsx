@@ -40,20 +40,22 @@ export default function Header({
   onLogout: () => void;
 }) {
   return (
-    <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_92%,transparent)]/95 shadow-sm backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6">
-        <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_94%,transparent)]/95 shadow-sm backdrop-blur">
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-3 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
           <Image
             src="/logo.png"
             alt="DNS Editor"
             width={40}
             height={40}
-            className="h-10 w-10 rounded-xl bg-white object-cover shadow-sm"
+            className="h-10 w-10 shrink-0 rounded-xl bg-white object-cover shadow-sm"
           />
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">DNS&#x2011;редактор</h1>
-            <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
-              <span>Управление DNS&#x2011;записями</span>
+          <div className="min-w-0">
+            <h1 className="truncate text-base font-semibold tracking-tight text-[var(--foreground)] sm:text-lg">
+              DNS&#x2011;редактор
+            </h1>
+            <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--muted)]">
+              <span className="truncate">Управление DNS&#x2011;записями</span>
               {bindStatus && (
                 <span className="inline-flex items-center gap-1" title={bindStatus.bind_running ? (bindStatus.version || "BIND работает") : (bindStatus.error || "BIND недоступен")}>
                   <span
@@ -69,14 +71,14 @@ export default function Header({
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-          <div className="flex items-center gap-1 sm:w-auto">
-            <span className="text-sm text-[var(--muted)]">Зона:</span>
+        <div className="grid gap-2 lg:flex lg:items-center lg:gap-3">
+          <div className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-1">
+            <span className="text-sm text-[var(--muted)]">Зона</span>
             <select
               value={selectedZoneName}
               onChange={(e) => onZoneChange(e.target.value)}
               disabled={loadingZone}
-              className="w-full min-w-[0] rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] sm:w-auto sm:min-w-[190px]"
+              className="min-w-0 rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] lg:min-w-[190px]"
             >
               {zoneList.map((f) => {
                 const name = f.startsWith("db.") ? f.slice(3) : f;
@@ -115,11 +117,11 @@ export default function Header({
               </svg>
             </button>
           </div>
-          <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-end">
+          <div className="grid grid-cols-[auto_auto_1fr_1fr] items-center gap-2 min-[520px]:grid-cols-[auto_auto_auto_1fr] sm:flex sm:w-full sm:justify-end lg:w-auto">
             <button
               type="button"
               onClick={onToggleTheme}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--card)] text-[var(--muted)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)]"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-strong)] bg-[var(--card)] text-[var(--muted)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)]"
               title={theme === "light" ? "Включить тёмную тему" : "Включить светлую тему"}
             >
               {theme === "light" ? (
@@ -145,7 +147,7 @@ export default function Header({
             <button
               type="button"
               onClick={onLogout}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--card)] text-[var(--muted)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)]"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-strong)] bg-[var(--card)] text-[var(--muted)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)]"
               title="Выйти"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,17 +163,17 @@ export default function Header({
               type="button"
               onClick={onReloadClick}
               disabled={reloading || loadingZone}
-              className="hidden rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--foreground)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)] disabled:opacity-60 min-[420px]:inline-flex"
+              className="inline-flex min-w-0 justify-center rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-3 py-2 text-sm font-medium text-[var(--foreground)] shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--muted-soft)] disabled:opacity-60 sm:px-4"
             >
-              {reloading ? "Перезагрузка…" : "Перезагрузить BIND"}
+              <span className="truncate">{reloading ? "Перезагрузка…" : "Reload BIND"}</span>
             </button>
             <button
               type="button"
               onClick={onSaveClick}
               disabled={savingZone || loadingZone}
-              className="flex-1 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--primary-hover)] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
+              className="min-w-0 rounded-lg bg-[var(--primary)] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[var(--primary-hover)] disabled:cursor-not-allowed disabled:opacity-60 sm:px-4"
             >
-              {savingZone ? "Сохранение…" : "Сохранить"}
+              <span className="truncate">{savingZone ? "Сохранение…" : "Сохранить"}</span>
             </button>
           </div>
         </div>

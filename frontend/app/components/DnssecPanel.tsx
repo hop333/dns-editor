@@ -146,7 +146,7 @@ export default function DnssecPanel({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between px-5 py-4 text-left"
+        className="flex w-full items-center justify-between px-4 py-4 text-left sm:px-5"
       >
         <span className="flex items-center gap-2 font-medium text-[var(--foreground)]">
           DNSSEC
@@ -166,7 +166,7 @@ export default function DnssecPanel({
         </svg>
       </button>
       {open && (
-        <div className="border-t border-[var(--border)] px-5 pb-5 pt-2 text-sm">
+        <div className="border-t border-[var(--border)] px-4 pb-5 pt-2 text-sm sm:px-5">
           {loading && <p className="text-[var(--muted)]">Загрузка…</p>}
           {error && (
             <p className="mb-3 rounded-lg border border-[var(--danger)] bg-[var(--danger-bg)] px-3 py-2 text-[var(--danger-text)]">
@@ -195,7 +195,7 @@ export default function DnssecPanel({
                   <p className="mb-1 font-medium text-[var(--foreground)]">
                     DS-записи (добавьте у регистратора домена):
                   </p>
-                  <pre className="max-h-40 overflow-auto rounded-lg border border-[var(--border)] bg-[var(--muted-soft)] p-3 text-xs">
+                  <pre className="max-h-40 overflow-auto whitespace-pre-wrap break-all rounded-lg border border-[var(--border)] bg-[var(--muted-soft)] p-3 text-xs">
                     {status.ds_records.join("\n")}
                   </pre>
                   <button
@@ -207,13 +207,13 @@ export default function DnssecPanel({
                   </button>
                 </div>
               )}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 {!status.enabled ? (
                   <button
                     type="button"
                     onClick={handleEnable}
                     disabled={acting}
-                    className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--primary-hover)] disabled:opacity-50"
+                    className="w-full rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--primary-hover)] disabled:opacity-50 sm:w-auto"
                   >
                     {acting ? "Включение…" : "Включить DNSSEC"}
                   </button>
@@ -222,7 +222,7 @@ export default function DnssecPanel({
                     type="button"
                     onClick={handleDisable}
                     disabled={acting}
-                    className="rounded-lg border border-[var(--danger)] bg-[var(--danger-bg)] px-4 py-2 text-sm font-medium text-[var(--danger-text)] transition hover:opacity-90 disabled:opacity-50"
+                    className="w-full rounded-lg border border-[var(--danger)] bg-[var(--danger-bg)] px-4 py-2 text-sm font-medium text-[var(--danger-text)] transition hover:opacity-90 disabled:opacity-50 sm:w-auto"
                   >
                     {acting ? "Отключение…" : "Отключить DNSSEC"}
                   </button>
@@ -231,7 +231,7 @@ export default function DnssecPanel({
                   type="button"
                   onClick={loadStatus}
                   disabled={loading || acting}
-                  className="rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--muted-soft)] disabled:opacity-50"
+                  className="w-full rounded-lg border border-[var(--border-strong)] bg-[var(--card)] px-4 py-2 text-sm font-medium transition hover:bg-[var(--muted-soft)] disabled:opacity-50 sm:w-auto"
                 >
                   Обновить
                 </button>

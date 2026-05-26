@@ -83,7 +83,7 @@ export function RecordEditForm({
   const labelClass = "block text-sm text-[var(--muted)]";
 
   return (
-    <div className="border-t border-[var(--border)] bg-[var(--card)] px-5 py-4">
+    <div className="border-t border-[var(--border)] bg-[var(--card)] px-4 py-4 sm:px-5">
       <p className="mb-3 text-sm font-semibold text-[var(--foreground)]">
         {isNew ? "Новая запись" : "Редактирование записи"} · <RecordTypeBadge type={form.type} />
       </p>
@@ -226,19 +226,19 @@ export function RecordEditForm({
           </>
         )}
       </div>
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
         <button
           type="button"
           onClick={handleSave}
           disabled={(form.type !== "SRV" && !form.value.trim()) || (form.type === "SRV" && !srvTarget.trim())}
-          className="rounded-lg bg-[var(--success)] px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 disabled:opacity-50"
+          className="w-full rounded-lg bg-[var(--success)] px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 disabled:opacity-50 sm:w-auto"
         >
           Сохранить
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)]"
+          className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--muted-soft)] sm:w-auto"
         >
           Отмена
         </button>
