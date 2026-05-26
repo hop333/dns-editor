@@ -161,21 +161,4 @@ Internet.
 
 Before publishing to GitHub, use [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
-## Current Architecture Note
 
-The backend is currently implemented mostly in one file, `backend/main.py`.
-That is acceptable for a diploma MVP and a small self-hosted project, but the
-next open-source milestone should split it into modules:
-
-- `models.py`
-- `auth.py`
-- `bind_service.py`
-- `zone_service.py`
-- `dnssec_service.py`
-- `routers/`
-
-This will make testing and external contributions much easier.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
